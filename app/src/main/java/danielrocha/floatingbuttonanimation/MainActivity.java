@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private FloatingActionButton fab;
     private ViewPagerAdapter adapter;
-    private int widthFab;
+    private int viewPagerWidth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,14 +77,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 final float scale = getResources().getDisplayMetrics().density;
-                int dp = (int) (16 * scale);
-                widthFab = viewPager.getWidth();
+                viewPagerWidth = viewPager.getWidth();
                 if(Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-                    widthFab = viewPager.getWidth() - dp;
+                    int dp = (int) (getResources().getDimension(R.dimen.fab_compat_margin) * scale);
+                    viewPagerWidth = viewPager.getWidth() - dp;
                 }
                 if(position == 0) {
                     // Transition from page 0 to page 1 (horizontal shift)
-                    int translationFabX = (int) (((widthFab - fab.getWidth()) / 2f) * positionOffset);
+                    int translationFabX = (int) (((viewPagerWidth - fab.getWidth()) / 2f) * positionOffset);
                     fab.setTranslationX(translationFabX);
                     fab.setTranslationY(0);
                 }
